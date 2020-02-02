@@ -1,4 +1,4 @@
-package client.modele;
+package model;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,7 +10,19 @@ package client.modele;
  *
  * @author Cours
  */
-public  abstract class Document {
+import java.io.Serializable;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Cours
+ */
+public abstract class Document implements Serializable{
     
     final private String isbn;
     final private String titre;
@@ -20,7 +32,7 @@ public  abstract class Document {
     private int exemplaires;
     private final int numero;
     static private int nb=0;
-    
+    private String pdf;
     Document(String isbn,String titre, String[] auteur,String editeur,int edition,int exemplaires  ){
         this.isbn=isbn;
         this.titre=titre;
@@ -35,14 +47,21 @@ public  abstract class Document {
     public String toString(){
         
         return  "Numero: "+numero+
-                " ISBN: "+isbn+
-                " Titre: "+titre+
-                " Premier auteur: "+auteur[0]+
-                " Editeur: "+editeur+
-                " Edition: "+edition+
-                " Nombre d'exemplaires: "+exemplaires;
+                "ISBN: "+isbn+
+                "Titre: "+titre+
+                "Premier auteur: "+auteur[0]+
+                "Editeur: "+editeur+
+                "Edition: "+edition+
+                "Nombre d'exemplaires: "+exemplaires;
                 
     }
+    public void setPdf(String url){
+        pdf=url;
+    }
+    public String getPdf(){
+        return pdf;
+    }
+    
     
     void incrementer(){
         exemplaires++;
@@ -86,7 +105,5 @@ public  abstract class Document {
     public int getNumero() {
         return numero;
     }
-    
-    
     
 }

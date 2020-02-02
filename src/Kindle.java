@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-
-import client.modele.Document;
+import model.Document;
+import model.Livre;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,34 +92,48 @@ public class Kindle {
             System.out.println("Veuillez saisir le password");
             String password=sc.nextLine();
             if(k.authentification(login, password)){ 
+               while(true){
                 System.out.println("Veuillez choisir une option:\n");
-                System.out.println("1: Chercher un document par ISBN");
-                System.out.println("2: Chercher un document par titre");
-                System.out.println("3: Chercher un document par auteur");
+                System.out.println("1: Chercher un document par ISBN") ;
+                System.out.println("2: Chercher un document par titre")  ;
+                System.out.println("3: Chercher un document par auteur") ;
                 System.out.println("4: Chercher un document par editeur");
                 int choix=sc.nextInt();
-                if(choix==1){
-                    System.out.println("3");
-                     System.out.println("Veuillez saisir l'ISBN");
-                     String isbn=sc.nextLine();
-                     k.sortie.write("isbn\n");
-                     k.sortie.write(isbn);
-                    try {
-                        Document doc=(Document)k.entreeObjet.readObject();
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Kindle.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                 
-                     
+                sc.nextLine();
+
+                switch (choix) {
+                    case 1:
+                        System.out.println("Veuillez saisir l'ISBN");
+                        String isbn=sc.nextLine();
+                        k.sortie.write("isbn\n");
+                        k.sortie.write(isbn +'\n');
+                        k.sortie.flush();
+                        try {
+                            Document doc=(Livre)k.entreeObjet.readObject();
+                            if(doc != null){
+                            System.out.println(doc.getTitre());
+                            String pdf = doc.getPdf();
+                            
+                            
+                            
+                            
+                            }
+                            else
+                                System.out.println("document n'existe");
+                           
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Kindle.class.getName()).log(Level.SEVERE, null, ex);
+                        }   break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
                 }
-                else if(choix==2){
-                }
-                else if(choix==3){
-                }
-                else if(choix==4){
-                }
-                else{
-                }
+               }
                 
                 
        
@@ -132,10 +146,7 @@ public class Kindle {
         else{
             System.out.println("erreur de connexion");
         }
-            //String msg="Hello";
-            //k.sortie.write(msg);
-            //k.sortie.flush();
-            
+  
        
      }
 }
