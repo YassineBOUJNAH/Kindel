@@ -18,12 +18,19 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author Cours
  */
-public class Kindle {
+public class Kindle extends JFrame {
     private final int numero;
     static private int nb=0;
     final String server_ip="127.0.0.1";
@@ -82,7 +89,14 @@ public class Kindle {
         //affciher le fichier sur ecran
         // donner une option pour sortir du fichier
     }
+
     public static void main(String[] args) throws IOException{
+            final JFrame frame=new JFrame();
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.setSize(620,440);
+    final JFXPanel fxpanel=new JFXPanel();
+    frame.add(fxpanel);
+
         Kindle k=new Kindle();
         boolean conection = k.onKindle();
         if(conection){
@@ -114,7 +128,18 @@ public class Kindle {
                             System.out.println(doc.getTitre());
                             String pdf = doc.getPdf();
                             
-                            
+                            Platform.runLater(new Runnable() {
+                            @Override
+                            public void run()
+                             {
+                                WebEngine engine;
+                                  WebView wv=new WebView();
+                                engine=wv.getEngine();
+                                 fxpanel.setScene(new Scene(wv));
+                                engine.load(pdf);
+                                 }
+                             });
+                               frame.setVisible(true);
                             
                             
                             }
