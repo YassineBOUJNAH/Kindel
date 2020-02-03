@@ -66,7 +66,10 @@ public class Kindle extends JFrame {
         entree.close();
         return true;
     }
-    boolean authentification(String login, String pass) throws IOException{
+    boolean authentification(String login, String pass,String type) throws IOException{
+        sortie.write(type);
+        sortie.write('\n');
+        System.out.println("type envoye");
         sortie.write(login);
         sortie.write('\n');
         System.out.println("login envoye");
@@ -101,11 +104,16 @@ public class Kindle extends JFrame {
         boolean conection = k.onKindle();
         if(conection){
             Scanner sc= new Scanner(System.in);
-            System.out.println("Veuillez saisir le login");
+            System.out.println("Veuillez saisir le type");
+            String type=sc.nextLine();
+            if(type.equals("etudiant"))
+                 System.out.println("Veuillez saisir le CNE");
+            else if(type.equals("professeur"))
+                 System.out.println("Veuillez saisir le CIN");
             String login=sc.nextLine();
             System.out.println("Veuillez saisir le password");
             String password=sc.nextLine();
-            if(k.authentification(login, password)){ 
+            if(k.authentification(login, password,type)){ 
                while(true){
                 System.out.println("Veuillez choisir une option:\n");
                 System.out.println("1: Chercher un document par ISBN") ;
