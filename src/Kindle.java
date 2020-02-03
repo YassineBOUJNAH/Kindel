@@ -92,10 +92,10 @@ public class Kindle extends JFrame {
 
     public static void main(String[] args) throws IOException{
             final JFrame frame=new JFrame();
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    frame.setSize(620,440);
-    final JFXPanel fxpanel=new JFXPanel();
-    frame.add(fxpanel);
+            frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+            frame.setSize(620,440);
+            final JFXPanel fxpanel=new JFXPanel();
+            frame.add(fxpanel);
 
         Kindle k=new Kindle();
         boolean conection = k.onKindle();
@@ -134,9 +134,9 @@ public class Kindle extends JFrame {
                              {
                                 WebEngine engine;
                                   WebView wv=new WebView();
-                                engine=wv.getEngine();
-                                 fxpanel.setScene(new Scene(wv));
-                                engine.load(pdf);
+                                  engine=wv.getEngine();
+                                  fxpanel.setScene(new Scene(wv));
+                                  engine.load(pdf);
                                  }
                              });
                                frame.setVisible(true);
@@ -144,7 +144,7 @@ public class Kindle extends JFrame {
                             
                             }
                             else
-                                System.out.println("document n'existe");
+                                System.out.println("document n'existe pas"); 
                            
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Kindle.class.getName()).log(Level.SEVERE, null, ex);
