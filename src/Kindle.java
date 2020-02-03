@@ -66,6 +66,7 @@ public class Kindle extends JFrame {
         entree.close();
         return true;
     }
+    boolean authentification(String login, String pass,String type) throws IOException{
    boolean authentification(String login, String pass,String type) throws IOException{
         sortie.write(type);
         sortie.write('\n');
