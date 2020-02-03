@@ -107,10 +107,10 @@ public class Kindle extends JFrame {
             String password=sc.nextLine();
             if(k.authentification(login, password)){ 
                while(true){
-                System.out.println("Veuillez choisir une option:\n");
-                System.out.println("1: Chercher un document par ISBN") ;
-                System.out.println("2: Chercher un document par titre")  ;
-                System.out.println("3: Chercher un document par auteur") ;
+                System.out.println("Veuillez choisir une option:\n     ");
+                System.out.println("1: Chercher un document par ISBN   ") ;
+                System.out.println("2: Chercher un document par titre  ")  ;
+                System.out.println("3: Chercher un document par auteur ") ;
                 System.out.println("4: Chercher un document par editeur");
                 int choix=sc.nextInt();
                 sc.nextLine();
@@ -118,14 +118,14 @@ public class Kindle extends JFrame {
                 switch (choix) {
                     case 1:
                         System.out.println("Veuillez saisir l'ISBN");
-                        String isbn=sc.nextLine();
+                        String isbn = sc.nextLine();
                         k.sortie.write("isbn\n");
                         k.sortie.write(isbn +'\n');
                         k.sortie.flush();
                         try {
-                            Document doc=(Livre)k.entreeObjet.readObject();
+                            Document doc =(Livre)k.entreeObjet.readObject();
                             if(doc != null){
-                            System.out.println(doc.getTitre());
+                            System.out.println(doc.getTitre()); 
                             String pdf = doc.getPdf();
                             
                             Platform.runLater(new Runnable() {
@@ -144,12 +144,58 @@ public class Kindle extends JFrame {
                             
                             }
                             else
-                                System.out.println("document n'existe pas"); 
+                                System.out.println("ce document n'existe pas"); 
                            
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Kindle.class.getName()).log(Level.SEVERE, null, ex);
                         }   break;
-                    case 2:
+                    case 2:   
+                        System.out.println(" Veuillez saisir le titre : ");  
+                        String titre  = sc.nextLine();
+                        k.sortie.write("titre\n");
+                        k.sortie.write(titre+'\n');
+                        k.sortie.flush(); 
+                        
+                        System.out.println("Veuillez choisir un document à afficher :");
+                 
+                    try {
+                        LinkedList<Document> documents = (LinkedList<Document>)k.entreeObjet.readObject();  
+                           int nb = 0 ;
+                           for(int i = 0 ; i < documents.size();i++){ 
+                             System.out.println(i+" :"+documents.get(i).getIsbn()+"editeur:"+documents.get(i).getEditeur());
+                             nb++;
+                           }  
+                            
+                           int ch = sc.nextInt();
+                                  
+                                  
+                                    if(ch < nb && ch> -1){ 
+                                           
+                                        
+                                                 //affichage du document
+                                              
+                            String pdf = documents.get(ch).getPdf();
+                            
+                            Platform.runLater(new Runnable() {
+                            @Override
+                            public void run()
+                             {
+                                  WebEngine engine;
+                                  WebView wv=new WebView();
+                                  engine=wv.getEngine();
+                                  fxpanel.setScene(new Scene(wv));
+                                  engine.load(pdf);
+                                 }
+                             });
+                               frame.setVisible(true);
+                                    }
+                                    else 
+                                        System.out.println("choix invalid");
+                       
+                    } catch (ClassNotFoundException ex) {
+                                       System.out.print("aucun document n'existe avec ce titre");
+                    }
+     
                         break;
                     case 3:
                         break;
